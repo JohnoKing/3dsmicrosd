@@ -36,11 +36,11 @@ echo "Where would you like to mount your microSD card: ?"
 read n3dsmnt
 
 # Mount the microSD card
-if [ ! -e $n3dsmnt ]
+if [ ! -e "$n3dsmnt" ]
 then
-  sudo mkdir -p $n3dsmnt
+  sudo mkdir -p "$n3dsmnt"
 fi
-sudo mount -t cifs //$n3dsname/microSD $n3dsmnt -o user=$n3dsusr,ip=$n3dsip,servern=$n3dsname,uid=$(sudo -u $(whoami) id -u),gid=$(sudo -u $(whoami) id -g),nounix
+sudo mount -t cifs //"$n3dsname"/microSD "$n3dsmnt" -o user="$n3dsusr",ip=$n3dsip,servern="$n3dsname",uid=$(sudo -u $(whoami) id -u),gid=$(sudo -u $(whoami) id -g),nounix
 
 # Check to see if the mount was successful
 if [ -e "$n3dsmnt/Nintendo 3DS" ]
@@ -53,10 +53,10 @@ then
   echo "Enter in your favorite shell now (ex. zsh or fish) to use it."
   echo "To exit the shell or this without using a shell, enter exit at any time."
   read n3dsshell
-  $n3dsshell
+  "$n3dsshell"
 
   # Unmount the microSD card when done
-  sudo umount -R $n3dsmnt
+  sudo umount -R "$n3dsmnt"
   exit 0
 else  # If it failed
   echo
