@@ -23,20 +23,24 @@
 # SOFTWARE.
 #
 
+# Version of the script
+export SCRIPTVER=0.8.1
+
 # Function to verify if the specified shell exists
 verifyshell()
 {
   read n3dsshell
-  if [ ! -e /bin/"$n3dsshell" ]
+  command -v "$n3dsshell" >& /dev/null
+  if [ $? = 1 ]
   then
-    echo "The specified shell is not in /bin or doesn't exist. Please specify a valid shell:"
+    echo "The specified shell doesn't exist. Please specify a valid shell:"
     verifyshell
   else
     "$n3dsshell"
   fi
 }
 
-echo "3dsmicrosd script version 0.8"
+echo "3dsmicrosd script version $SCRIPTVER"
 echo "Enter the username used for microSD management on the New 3DS:"
 read n3dsusr
 echo
@@ -73,6 +77,6 @@ then
   exit 0
 else  # If it failed
   echo
-  echo "ERROR: The microSD card failed to mount!"
+  echo "The microSD card failed to mount!"
   exit 1
 fi
