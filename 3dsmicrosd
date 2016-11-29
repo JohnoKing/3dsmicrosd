@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 #
 # MIT License
 #
@@ -24,59 +24,51 @@
 #
 
 # Version of the script
-export SCRIPTVER=0.8.1
+export SCRIPTVER=0.8.2
 
 # Function to verify if the specified shell exists
 verifyshell()
 {
-  read n3dsshell
-  command -v "$n3dsshell" >& /dev/null
-  if [ $? = 1 ]
-  then
-    echo "The specified shell doesn't exist. Please specify a valid shell:"
-    verifyshell
-  else
-    "$n3dsshell"
-  fi
+    read n3dsshell
+    command -v "$n3dsshell" > /dev/null 2> /dev/null
+    if [ $? = 1 ]
+    then
+        echo "The specified shell doesn't exist. Please specify a valid shell:"
+        verifyshell
+    else
+        "$n3dsshell"
+    fi
 }
 
-echo "3dsmicrosd script version $SCRIPTVER"
-echo "Enter the username used for microSD management on the New 3DS:"
+echo "3dsmicrosd version $SCRIPTVER"
+echo -e "\nEnter the username used for microSD management on the New 3DS:"
 read n3dsusr
-echo
-echo "Enter the name the New 3DS uses for microSD management:"
+echo -e "\nEnter the name the New 3DS uses for microSD management:"
 read n3dsname
-echo
-echo "Enter the New 3DS's local ip address:"
+echo -e "\nEnter the New 3DS's local ip address:"
 read n3dsip
-echo
-echo "Where would you like to mount your microSD card: ?"
+echo -e "\nWhere would you like to mount your microSD card: ?"
 read n3dsmnt
 
 # Mount the microSD card
-if [ ! -e "$n3dsmnt" ]
-then
-  sudo mkdir -p "$n3dsmnt"
-fi
+sudo mkdir -p "$n3dsmnt"
 sudo mount -t cifs //"$n3dsname"/microSD "$n3dsmnt" -o user="$n3dsusr",ip=$n3dsip,servern="$n3dsname",uid=$(sudo -u $(whoami) id -u),gid=$(sudo -u $(whoami) id -g),nounix
 
 # Check to see if the mount was successful
 if [ -e "$n3dsmnt/Nintendo 3DS" ]
 then
-  echo
-  echo "The New 3DS's microSD card is mounted at $n3dsmnt"
-  echo
+    echo -e "\nThe New 3DS's microSD card is mounted at $n3dsmnt\n"
 
-  # Allow the user to enter a shell for transfering files
-  echo "Enter in your favorite shell now (ex. zsh or fish) to use it."
-  echo "To exit the shell or this without using a shell, enter exit at any time."
-  verifyshell
+    # Allow the user to enter a shell for transfering files
+    echo "Input your favorite shell now (ex. zsh or fish) to use it."
+    echo "To exit the shell or this prompt, enter exit at any time."
+    verifyshell
 
-  # Unmount the microSD card when done
-  sudo umount -R "$n3dsmnt"
-  exit 0
-else  # If it failed
-  echo
-  echo "The microSD card failed to mount!"
-  exit 1
+    # Unmount the microSD card when done
+    sync
+    sudo umount -R "$n3dsmnt"
+    exit 0
+else    # If it failed
+    echo -e "\nThe microSD card failed to mount!"
+    exit 1
 fi
