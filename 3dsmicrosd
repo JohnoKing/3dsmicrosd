@@ -68,7 +68,7 @@ then
     sync
     sudo umount -R "$n3dsmnt"
     exit 0
-else    # If it failed
+else # If it failed
     echo -e "\nThe microSD card failed to mount!"
     exit 1
 fi
