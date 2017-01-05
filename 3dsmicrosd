@@ -24,13 +24,13 @@
 #
 
 # Version of the script
-export SCRIPTVER=0.8.2
+export SCRIPTVER=0.8.3
 
 # Function to verify if the specified shell exists
 verifyshell()
 {
     read n3dsshell
-    command -v "$n3dsshell" > /dev/null 2> /dev/null
+    command -v "$n3dsshell" > /dev/null
     if [ $? = 1 ]
     then
         echo "The specified shell doesn't exist. Please specify a valid shell:"
@@ -60,8 +60,7 @@ then
     echo -e "\nThe New 3DS's microSD card is mounted at $n3dsmnt\n"
 
     # Allow the user to enter a shell for transfering files
-    echo "Input your favorite shell now (ex. zsh or fish) to use it."
-    echo "To exit the shell or this prompt, enter exit at any time."
+    echo -e "Input your favorite shell now (ex. zsh or fish) to use it.\nTo exit the shell or this prompt, enter exit at any time."
     verifyshell
 
     # Unmount the microSD card when done
