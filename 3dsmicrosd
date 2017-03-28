@@ -21,52 +21,47 @@
 # SOFTWARE.
 #
 
-# Version of the script
-export SCRIPTVER=0.8.4
+# The version of the script.
+export SCRIPTVER=0.9
 
 # Echo and read
-echread()
+function echread()
 {
     echo -e $1
     read $2
 }
 
-# Verify if the specified shell exists
-verifyshell()
-{
-    read n3dsshell
-    command -v "$n3dsshell" > /dev/null
-    if [ $? = 1 ]; then
-        echo "The specified shell doesn't exist. Please specify a valid shell:"
-        verifyshell
-    else
-        "$n3dsshell"
-    fi
-}
-
 echo "3dsmicrosd version $SCRIPTVER"
-echread "\nEnter the username used for microSD management on the New 3DS:" n3dsusr
-echread "\nEnter the name the New 3DS uses for microSD management:" n3dsname
-echread "\nEnter the New 3DS's local ip address:" n3dsip
-echread "\nWhere would you like to mount your microSD card: ?" n3dsmnt
+echread "\nEnter the username used for microSD management on the New 3DS..." n3dsusr
+echread "\nEnter the name the New 3DS uses for microSD management..." n3dsname
+echread "\nEnter the New 3DS's local IP address..." n3dsip
+echread "\nWhere would you like to mount your microSD card? (ex. /mnt)" n3dsmnt; echo
 
-# Mount the microSD card
+# Mount the microSD card.
 sudo mkdir -p "$n3dsmnt"
 sudo mount -t cifs //"$n3dsname"/microSD "$n3dsmnt" -o user="$n3dsusr",ip=$n3dsip,servern="$n3dsname",uid=$(sudo -u $(whoami) id -u),gid=$(sudo -u $(whoami) id -g),nounix
 
-# Check to see if the mount was successful
+# Check to see if the mount was successful.
 if [ -e "$n3dsmnt/Nintendo 3DS" ]; then
-    echo -e "\nThe New 3DS's microSD card is mounted at $n3dsmnt\n"
+    echo -e "\nThe New 3DS's microSD card is now mounted at $n3dsmnt\n"
 
-    # Allow the user to enter a shell for transfering files
-    echo -e "Input your favorite shell now (ex. zsh or fish) to use it.\nTo exit the shell or this prompt, enter exit at any time."
-    verifyshell
+    # Allow the user to use a shell for transferring files.
+    echo -e "Which shell would you like to use? This will allow you to transfer your files between your 3DS and PC..."
+    while true; do
+        read n3dsshell
+        if [ "$n3dsshell" = "" ] || [ "$(grep "$n3dsshell" /etc/shells 2> /dev/null | sed 's:/bin/::g')" != "$n3dsshell" ]; then
+            echo "Please select a valid shell..."; false
+        else
+            $n3dsshell
+            break
+        fi
+    done
 
-    # Unmount the microSD card when done
+    # Unmount the microSD card when done.
     sync
     sudo umount -R "$n3dsmnt"
     exit 0
-else # If it failed
+else # If it failed.
     echo -e "\nThe microSD card failed to mount!"
     exit 1
 fi
