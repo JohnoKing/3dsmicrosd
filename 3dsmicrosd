@@ -34,7 +34,7 @@ function echread()
 echo "3dsmicrosd version $SCRIPTVER"
 echread "\nEnter the username used for microSD management on the New 3DS..." n3dsusr
 echread "\nEnter the name the New 3DS uses for microSD management..." n3dsname
-echread "\nEnter the New 3DS's local IP address..." n3dsip
+echread "\nEnter the New 3DS' local IP address..." n3dsip
 echread "\nWhere would you like to mount your microSD card? (ex. /mnt)" n3dsmnt; echo
 
 # Mount the microSD card.
@@ -46,7 +46,7 @@ if [ -e "$n3dsmnt/Nintendo 3DS" ]; then
     echo -e "\nThe New 3DS's microSD card is now mounted at $n3dsmnt\n"
 
     # Allow the user to use a shell for transferring files.
-    echo -e "Which shell would you like to use? This will allow you to transfer your files between your 3DS and PC..."
+    echo -e "Which shell would you like to use? This will allow you to transfer your files between your PC and 3DS..."
     while true; do
         read n3dsshell
         if [ "$n3dsshell" = "" ] || [ "$(grep "$n3dsshell" /etc/shells 2> /dev/null | sed 's:/bin/::g')" != "$n3dsshell" ]; then
