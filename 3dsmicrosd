@@ -22,7 +22,7 @@
 #
 
 # The version of the script.
-export SCRIPTVER=0.9.1
+export SCRIPTVER=0.9.2
 
 # Echo and read
 function echread()
@@ -35,7 +35,7 @@ echo "3dsmicrosd version $SCRIPTVER"
 echread "\nEnter the username used for microSD management on the New 3DS..." n3dsusr
 echread "\nEnter the name the New 3DS uses for microSD management..." n3dsname
 echread "\nEnter the New 3DS' local IP address..." n3dsip
-echread "\nWhere would you like to mount your microSD card? (ex. /mnt)" n3dsmnt; echo
+echread "\nWhere would you like to mount your microSD card? (ex. /mnt)" n3dsmnt
 
 # Mount the microSD card.
 sudo mkdir -p "$n3dsmnt"
