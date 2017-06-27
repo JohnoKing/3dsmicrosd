@@ -4,7 +4,7 @@
 This is a script for the use of the New 3DS' microSD management on Linux.
 
 ## Dependencies
-This script depends on bash and cifs-utils.
+This script depends on cifs-utils.
 
 ## License
 

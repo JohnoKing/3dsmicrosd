@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 #
 # Copyright (c) 2016-2017 Johnothan King
 #
@@ -21,31 +21,33 @@
 # SOFTWARE.
 #
 
-# The version of the script.
+# The version of the script
 export SCRIPTVER=0.9.2
 
 # Echo and read
-function echread()
-{
-    echo -e $1
+echread() {
+    echo ""
+    echo $1
     read $2
 }
 
 echo "3dsmicrosd version $SCRIPTVER"
-echread "\nEnter the username used for microSD management on the New 3DS..." n3dsusr
-echread "\nEnter the name the New 3DS uses for microSD management..." n3dsname
-echread "\nEnter the New 3DS' local IP address..." n3dsip
-echread "\nWhere would you like to mount your microSD card? (ex. /mnt)" n3dsmnt
+echread "Enter the username used for microSD management on the New 3DS..." n3dsusr
+echread "Enter the name the New 3DS uses for microSD management..." n3dsname
+echread "Enter the New 3DS' local IP address..." n3dsip
+echread "Where would you like to mount your microSD card? (e.g. /mnt)" n3dsmnt
 
-# Mount the microSD card.
+# Mount the microSD card
 sudo mkdir -p "$n3dsmnt"
 sudo mount -t cifs //"$n3dsname"/microSD "$n3dsmnt" -o user="$n3dsusr",ip=$n3dsip,servern="$n3dsname",uid=$(sudo -u $(whoami) id -u),gid=$(sudo -u $(whoami) id -g),nounix
 
-# Check to see if the mount was successful.
+# Check to see if the mount was successful
 if [ -e "$n3dsmnt/Nintendo 3DS" ]; then
-    echo -e "\nThe New 3DS's microSD card is now mounted at $n3dsmnt\n"
+    echo ""
+    echo "The New 3DS's microSD card is now mounted at $n3dsmnt"
+    echo ""
 
-    # Allow the user to use a shell for transferring files.
+    # Allow the user to use a shell for transferring files
     echo "Which shell would you like to use? This will allow you to transfer your files between your PC and 3DS..."
     while true; do
         read n3dsshell
@@ -57,11 +59,12 @@ if [ -e "$n3dsmnt/Nintendo 3DS" ]; then
         fi
     done
 
-    # Unmount the microSD card when done.
+    # Unmount the microSD card when done
     sync
     sudo umount -R "$n3dsmnt"
     exit 0
-else # If it failed.
-    echo -e "\nThe microSD card failed to mount!"
+else # If it failed
+    echo ""
+    echo "The microSD card failed to mount!"
     exit 1
 fi
