@@ -22,7 +22,7 @@
 #
 
 # The version of the script
-export SCRIPTVER=0.9.2
+export SCRIPTVER=0.10
 
 # Echo and read
 echread() {
