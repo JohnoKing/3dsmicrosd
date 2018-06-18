@@ -1,6 +1,6 @@
-#!/bin/sh
+#!/bin/ksh
 #
-# Copyright (c) 2016-2017 Johnothan King
+# Copyright (c) 2016-2018 Johnothan King
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -22,7 +22,7 @@
 #
 
 # The version of the script
-SCRIPTVER=0.10
+SCRIPTVER=0.10.1
 
 # Echo and read
 echread() {
@@ -38,8 +38,9 @@ echread "Enter the New 3DS' local IP address..." n3dsip
 echread "Where would you like to mount your microSD card? (e.g. /mnt)" n3dsmnt
 
 # Mount the microSD card
+WHOAMI=`whoami`
 sudo mkdir -p "$n3dsmnt"
-sudo mount -t cifs //"$n3dsname"/microSD "$n3dsmnt" -o user="$n3dsusr",ip=$n3dsip,servern="$n3dsname",uid=$(sudo -u $(whoami) id -u),gid=$(sudo -u $(whoami) id -g),nounix
+sudo mount -t cifs //"$n3dsname"/microSD "$n3dsmnt" -o user="$n3dsusr",ip=$n3dsip,servern="$n3dsname",uid=`sudo -u $WHOAMI id -u`,gid=`sudo -u $WHOAMI id -g`,nounix,vers=1.0
 
 # Check to see if the mount was successful
 if [ -e "$n3dsmnt/Nintendo 3DS" ]; then
@@ -51,7 +52,7 @@ if [ -e "$n3dsmnt/Nintendo 3DS" ]; then
     echo "Which shell would you like to use? This will allow you to transfer your files between your PC and 3DS..."
     while true; do
         read n3dsshell
-        if [ "$n3dsshell" = "" ] || [ "$(grep "$n3dsshell" /etc/shells 2> /dev/null | sed 's:/bin/::g')" != "$n3dsshell" ]; then
+        if [ "$n3dsshell" = "" ] || [ "`grep "$n3dsshell" /etc/shells 2> /dev/null | sed 's:/bin/::g'`" != "$n3dsshell" ]; then
             echo "Please select a valid shell..."; false
         else
             $n3dsshell
