@@ -1,4 +1,4 @@
-#!/bin/ksh
+#!/bin/sh
 #
 # Copyright (c) 2016-2018 Johnothan King
 #
@@ -43,7 +43,7 @@ sudo mkdir -p "$n3dsmnt"
 sudo mount -t cifs //"$n3dsname"/microSD "$n3dsmnt" -o user="$n3dsusr",ip=$n3dsip,servern="$n3dsname",uid=`sudo -u $WHOAMI id -u`,gid=`sudo -u $WHOAMI id -g`,nounix,vers=1.0
 
 # Check to see if the mount was successful
-if [ -e "$n3dsmnt/Nintendo 3DS" ]; then
+if [ -d "$n3dsmnt/Nintendo 3DS" ]; then
     echo ""
     echo "The New 3DS's microSD card is now mounted at $n3dsmnt"
     echo ""
