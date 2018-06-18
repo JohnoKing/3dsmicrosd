@@ -1,7 +1,7 @@
 3dsmicrosd
 ===============
 
-This is a script for the use of the New 3DS' microSD management on Linux.
+This is a script for the use of the New 3DS's microSD management on Linux.
 
 ## Dependencies
 This script depends on cifs-utils.
