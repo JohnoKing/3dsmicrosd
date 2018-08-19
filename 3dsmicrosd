@@ -22,7 +22,7 @@
 #
 
 # The version of the script
-SCRIPTVER=1.0.2
+SCRIPTVER=1.0.3
 
 # Echo and read
 echread() {
@@ -44,7 +44,7 @@ sudo mount -t cifs //"$n3dsname"/microSD "$n3dsmnt" -o user="$n3dsusr",ip=$n3dsi
 # Check to see if the mount was successful
 if [ -d "$n3dsmnt/Nintendo 3DS" ]; then
     echo ""
-    echo "The New 3DS's microSD card is now mounted at $n3dsmnt"
+    echo "The New 3DS' microSD card is now mounted at $n3dsmnt"
     echo ""
 
     # Allow the user to use a shell for transferring files
