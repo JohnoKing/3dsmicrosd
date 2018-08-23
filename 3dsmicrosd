@@ -22,20 +22,19 @@
 #
 
 # The version of the script
-SCRIPTVER=1.0.3
+SCRIPTVER=1.1.0
 
-# Echo and read
-echread() {
-    echo ""
-    echo $1
+# Print and read
+pread() {
+    printf "$1\n"
     read $2
 }
 
-echo "3dsmicrosd version $SCRIPTVER"
-echread "Enter the username used for microSD management on the New 3DS..." n3dsusr
-echread "Enter the name the New 3DS uses for microSD management..." n3dsname
-echread "Enter the New 3DS' local IP address..." n3dsip
-echread "Where would you like to mount your microSD card? (e.g. /mnt)" n3dsmnt
+printf "3dsmicrosd version $SCRIPTVER\n"
+pread "Enter the username used for microSD management on the New 3DS..." n3dsusr
+pread "Enter the name the New 3DS uses for microSD management..." n3dsname
+pread "Enter the New 3DS' local IP address..." n3dsip
+pread "Where would you like to mount your microSD card? (e.g. /mnt)..." n3dsmnt
 
 # Mount the microSD card
 sudo mkdir -p "$n3dsmnt"
@@ -43,19 +42,17 @@ sudo mount -t cifs //"$n3dsname"/microSD "$n3dsmnt" -o user="$n3dsusr",ip=$n3dsi
 
 # Check to see if the mount was successful
 if [ -d "$n3dsmnt/Nintendo 3DS" ]; then
-    echo ""
-    echo "The New 3DS' microSD card is now mounted at $n3dsmnt"
-    echo ""
+    printf "\nThe New 3DS' microSD card is now mounted at $n3dsmnt\n"
 
     # Allow the user to use a shell for transferring files
-    echo "Which shell would you like to use (e.g. /bin/bash)? This will allow you to transfer your files between your PC and 3DS..."
+    printf "Which shell would you like to use (e.g. /bin/bash)? This will allow you to transfer your files between your PC and 3DS...\n"
     while true; do
         read n3dsshell
         if [ -x "$n3dsshell" ]; then
             $n3dsshell
             break
         else
-            echo "Please select a valid shell..."
+            printf "Please select a valid shell...\n"
         fi
     done
 
@@ -64,7 +61,6 @@ if [ -d "$n3dsmnt/Nintendo 3DS" ]; then
     sudo umount -R "$n3dsmnt"
     exit 0
 else # If it failed
-    echo ""
-    echo "The microSD card failed to mount!"
+    printf "\nThe microSD card failed to mount!\n"
     exit 1
 fi
