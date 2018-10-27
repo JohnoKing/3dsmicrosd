@@ -22,7 +22,7 @@
 #
 
 # The version of the script
-SCRIPTVER=1.2.0
+SCRIPTVER=1.2.1
 
 # Print and read
 eread() {
@@ -30,7 +30,8 @@ eread() {
 	read $2
 }
 
-echo  "3dsmicrosd version $SCRIPTVER\n"
+echo  "3dsmicrosd version $SCRIPTVER"
+echo  ""
 eread "Enter the username used for microSD management on the New 3DS..." n3dsusr
 eread "Enter the name the New 3DS uses for microSD management..." n3dsname
 eread "Enter the New 3DS' local IP address..." n3dsip
