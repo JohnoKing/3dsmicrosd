@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Copyright (c) 2016-2019 Johnothan King
+# Copyright (c) 2016-2020 Johnothan King
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -22,7 +22,7 @@
 #
 
 # The version of the script
-SCRIPTVER='v1.2.3'
+SCRIPTVER='v1.2.4'
 
 # Print and read
 eread() {
@@ -43,8 +43,8 @@ sudo mount -t cifs "//$n3dsname/microSD" "$n3dsmnt" -o "user=$n3dsusr,ip=$n3dsip
 echo ""
 
 # Check to see if the mount was successful
-if [ -d "$n3dsmnt/Nintendo 3DS" ]; then
-
+if [ -d "$n3dsmnt/Nintendo 3DS" ]
+then
 	# Allow the user to use a shell for transferring files
 	echo "The microSD card is now mounted at $n3dsmnt"
 	echo "Which shell would you like to use (e.g. /bin/bash)? This will allow you to transfer your files between your PC and 3DS..."
