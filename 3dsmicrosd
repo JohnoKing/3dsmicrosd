@@ -22,12 +22,12 @@
 #
 
 # The version of the script
-SCRIPTVER='v1.2.4'
+SCRIPTVER='v1.2.5'
 
 # Print and read
 eread() {
 	echo "$1"
-	read $2
+	read "$2"
 }
 
 echo  "3dsmicrosd $SCRIPTVER"
